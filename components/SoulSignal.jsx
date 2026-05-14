@@ -735,7 +735,7 @@ export default function SoulSignal() {
                 <p style={{ fontFamily:"'Libre Baskerville',Georgia,serif", color:T.accent, fontSize:"1.3rem", marginBottom:4 }}>£3.99<span style={{ fontSize:"0.72rem", color:T.textLight }}>/month</span></p>
                 <p style={{ fontFamily:"'DM Sans',sans-serif", fontSize:"0.7rem", color:T.textLight, fontWeight:300 }}>Unlimited readings · Daily signals · Shadow work</p>
               </div>
-              <button onClick={()=>{setShowPaywall(false);setReadingCount(0);}} onMouseEnter={e=>hoverBtn(e,true)} onMouseLeave={e=>hoverBtn(e,false)} style={{...btnBase, width:"100%", padding:"16px", marginBottom:12}}>Unlock Soul Signal — £3.99/mo</button>
+              <button onClick={()=> window.open('https://buy.stripe.com/fZu9ASgX49Rignz1IHdwc00', '_blank')} onMouseEnter={e=>hoverBtn(e,true)} onMouseLeave={e=>hoverBtn(e,false)} style={{...btnBase, width:"100%", padding:"16px", marginBottom:12}}>Unlock Soul Signal — £3.99/mo</button>
               <button onClick={()=>{setShowPaywall(false);setScreen("oracle");}} style={{ background:"none", border:"none", color:T.textLight, fontFamily:"'DM Sans',sans-serif", fontSize:"0.73rem", cursor:"pointer", padding:"8px", fontWeight:300 }}>Maybe later</button>
             </div>
           </div>
