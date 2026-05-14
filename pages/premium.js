@@ -569,10 +569,14 @@ export default function SoulSignalPremium() {
   const [loading, setLoading] = useState(false);
   const [fadeIn, setFadeIn] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
+  const [showBookmark, setShowBookmark] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    if (params.get("key") === PREMIUM_KEY) setUnlocked(true);
+    if (params.get("key") === PREMIUM_KEY) {
+      setUnlocked(true);
+      setShowBookmark(true);
+    }
   }, []);
 
   useEffect(() => { setTimeout(() => setFadeIn(true), 100); }, []);
@@ -626,7 +630,24 @@ export default function SoulSignalPremium() {
     <div style={{ minHeight:"100vh", background:`linear-gradient(180deg, #0f0b18 0%, ${T.bg} 50%, #0a0710 100%)`, display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column", position:"relative", overflow:"hidden" }}>
       <CosmicBackground />
       <style>{GLOBAL_CSS}</style>
-      <div style={{ position:"relative", zIndex:1, textAlign:"center", padding:"40px 24px", opacity:fadeIn?1:0, transition:"opacity 2s ease" }}>
+
+      {showBookmark && (
+        <div style={{ position:"fixed", top:0, left:0, right:0, zIndex:100, background:"linear-gradient(135deg, rgba(200,160,80,0.97), rgba(160,120,50,0.97))", padding:"14px 20px", display:"flex", alignItems:"center", justifyContent:"space-between", gap:12, boxShadow:"0 4px 20px rgba(200,160,80,0.4)" }}>
+          <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+            <span style={{ fontSize:"1.2rem" }}>🔖</span>
+            <div>
+              <p style={{ fontFamily:"Helvetica,sans-serif", fontWeight:"bold", fontSize:"0.82rem", color:"#2D2A24", marginBottom:2 }}>Bookmark this page right now!</p>
+              <p style={{ fontFamily:"Helvetica,sans-serif", fontSize:"0.72rem", color:"rgba(45,42,36,0.85)" }}>This URL is your permanent key. Save it or you will lose access.</p>
+            </div>
+          </div>
+          <div style={{ display:"flex", gap:8, flexShrink:0 }}>
+            <button onClick={()=>{ navigator.clipboard?.writeText(window.location.href); }} style={{ background:"rgba(45,42,36,0.2)", border:"1px solid rgba(45,42,36,0.4)", color:"#2D2A24", padding:"8px 14px", borderRadius:4, cursor:"pointer", fontFamily:"Helvetica,sans-serif", fontSize:"0.72rem", fontWeight:"bold" }}>Copy Link</button>
+            <button onClick={()=>setShowBookmark(false)} style={{ background:"none", border:"none", color:"rgba(45,42,36,0.6)", cursor:"pointer", fontSize:"1.1rem", padding:"4px 8px" }}>✕</button>
+          </div>
+        </div>
+      )}
+
+      <div style={{ position:"relative", zIndex:1, textAlign:"center", padding: showBookmark ? "80px 24px 40px" : "40px 24px", opacity:fadeIn?1:0, transition:"opacity 2s ease" }}>
         {/* Premium badge */}
         <div style={{ display:"inline-flex", alignItems:"center", gap:8, padding:"6px 16px", border:`1px solid rgba(200,160,80,0.4)`, borderRadius:20, marginBottom:28, animation:"premiumBadge 3s ease-in-out infinite", background:"rgba(200,160,80,0.08)" }}>
           <span style={{ color:T.accentGold, fontSize:"0.6rem" }}>✦</span>
