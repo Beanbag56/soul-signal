@@ -10,15 +10,26 @@ export default async function handler(req, res) {
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'claude-haiku-4-5-20251001',
         max_tokens: 1000,
         messages: req.body.messages,
       }),
     });
 
     const data = await response.json();
+    console.log('Anthropic status:', response.status, 'data:', JSON.stringify(data).slice(0, 300));
+
+    if (!response.ok) {
+      return res.status(200).json({
+        content: [{ type: 'text', text: `Error ${response.status}: ${data.error?.message || JSON.stringify(data)}` }]
+      });
+    }
+
     res.status(200).json(data);
   } catch (err) {
-    res.status(500).json({ error: 'Failed to generate reading' });
+    console.log('Error:', err.message);
+    res.status(200).json({
+      content: [{ type: 'text', text: `Connection error: ${err.message}` }]
+    });
   }
 }
